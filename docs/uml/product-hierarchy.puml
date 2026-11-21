@@ -1,11 +1,12 @@
 @startuml
 
-class Product {
+abstract class Product {
   - id : Long
   - name : String
   - price : double
   + Product()
   + Product(id : Long, name : String, price : double)
+  + {abstract} getSummary() : String
   + getId() : Long
   + getName() : String
   + getPrice() : double
@@ -14,11 +15,20 @@ class Product {
   + setPrice(price : double) : void
 }
 
+interface Discountable {
+  + applyDiscount(rate : double) : void
+  + getDiscountedPrice() : double
+}
+
 class DigitalProduct {
   - downloadUrl : String
   - fileSizeMB : double
+  - discountedPrice : double
   + DigitalProduct()
   + DigitalProduct(id : Long, name : String, price : double, downloadUrl : String, fileSizeMB : double)
+  + getSummary() : String
+  + applyDiscount(rate : double) : void
+  + getDiscountedPrice() : double
   + getDownloadUrl() : String
   + getFileSizeMB() : double
   + setDownloadUrl(downloadUrl : String) : void
@@ -28,8 +38,12 @@ class DigitalProduct {
 class PhysicalProduct {
   - weightKg : double
   - dimensions : String
+  - discountedPrice : double
   + PhysicalProduct()
   + PhysicalProduct(id : Long, name : String, price : double, weightKg : double, dimensions : String)
+  + getSummary() : String
+  + applyDiscount(rate : double) : void
+  + getDiscountedPrice() : double
   + getWeightKg() : double
   + getDimensions() : String
   + setWeightKg(weightKg : double) : void
@@ -38,5 +52,8 @@ class PhysicalProduct {
 
 Product <|-- DigitalProduct
 Product <|-- PhysicalProduct
+
+Discountable <|.. DigitalProduct
+Discountable <|.. PhysicalProduct
 
 @enduml
