@@ -14,7 +14,6 @@ import java.util.List;
 @RestController
 public class ProductController {
 
-    // Spring creates the ProductService and hands it over.
     @Autowired
     private ProductService productService;
 
@@ -35,6 +34,16 @@ public class ProductController {
 
     @PostMapping("/products")
     public Product addProduct(@RequestBody Product product) {
+        return productService.addProduct(product);
+    }
+
+    @PostMapping("/products/digital")
+    public Product addDigitalProduct(@RequestBody DigitalProduct product) {
+        return productService.addProduct(product);
+    }
+
+    @PostMapping("/products/physical")
+    public Product addPhysicalProduct(@RequestBody PhysicalProduct product) {
         return productService.addProduct(product);
     }
 
